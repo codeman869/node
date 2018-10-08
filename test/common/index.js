@@ -30,10 +30,11 @@ const { exec, execSync, spawnSync } = require('child_process');
 const util = require('util');
 const { fixturesDir } = require('./fixtures');
 const tmpdir = require('./tmpdir');
+const { internalBinding } = require('internal/test/binding');
 const {
   bits,
   hasIntl
-} = process.binding('config');
+} = internalBinding('config');
 
 const noop = () => {};
 
@@ -74,7 +75,6 @@ if (process.env.NODE_TEST_WITH_ASYNC_HOOKS) {
   const destroydIdsList = {};
   const destroyListList = {};
   const initHandles = {};
-  const { internalBinding } = require('internal/test/binding');
   const async_wrap = internalBinding('async_wrap');
 
   process.on('exit', () => {
@@ -351,7 +351,6 @@ function _mustCallInner(fn, criteria = 1, field) {
 }
 
 function hasMultiLocalhost() {
-  const { internalBinding } = require('internal/test/binding');
   const { TCP, constants: TCPConstants } = internalBinding('tcp_wrap');
   const t = new TCP(TCPConstants.SOCKET);
   const ret = t.bind('127.0.0.2', 0);

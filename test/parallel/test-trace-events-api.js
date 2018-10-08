@@ -1,9 +1,10 @@
-// Flags: --expose-gc --no-warnings
+// Flags: --expose-gc --no-warnings --expose-internals
 'use strict';
 
 const common = require('../common');
+const { internalBinding } = require('internal/test/binding');
 
-if (!process.binding('config').hasTracing)
+if (!internalBinding('config').hasTracing)
   common.skip('missing trace events');
 if (!common.isMainThread)
   common.skip('process.chdir is not available in Workers');

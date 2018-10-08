@@ -1,6 +1,7 @@
 'use strict';
-
+// Flags: --expose-internals
 const common = require('../common');
+const { internalBinding } = require('internal/test/binding');
 
 common.skipIfInspectorDisabled();
 common.skipIfWorker();
@@ -303,7 +304,7 @@ function masterProcessMain() {
 
 function workerProcessMain() {
   const { expectedPort, expectedInitialPort, expectedHost } = process.env;
-  const debugOptions = process.binding('config').debugOptions;
+  const debugOptions = internalBinding('config').debugOptions;
 
   if ('expectedPort' in process.env) {
     assert.strictEqual(process.debugPort, +expectedPort);

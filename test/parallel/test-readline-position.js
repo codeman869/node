@@ -1,6 +1,8 @@
 'use strict';
+// Flags: --expose-internals
 require('../common');
 const { PassThrough } = require('stream');
+const { internalBinding } = require('internal/test/binding');
 const readline = require('readline');
 const assert = require('assert');
 
@@ -23,7 +25,7 @@ const ctrlU = { ctrl: true, name: 'u' };
   // The non-ICU JS implementation of character width calculation is only aware
   // of the wide/narrow distinction. Only test these more advanced cases when
   // ICU is available.
-  if (process.binding('config').hasIntl) {
+  if (internalBinding('config').hasIntl) {
     tests.push(
       [0, '\u0301'],   // COMBINING ACUTE ACCENT
       [1, 'a\u0301'],  // á

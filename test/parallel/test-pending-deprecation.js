@@ -1,7 +1,8 @@
 'use strict';
+// Flags: --expose-internals
 
 // Tests that --pending-deprecation and NODE_PENDING_DEPRECATION both
-// set the process.binding('config').pendingDeprecation flag that is
+// set the internalBinding('config').pendingDeprecation flag that is
 // used to determine if pending deprecation messages should be shown.
 // The test is performed by launching two child processes that run
 // this same test script with different arguments. If those exit with
@@ -10,11 +11,14 @@
 const common = require('../common');
 
 const assert = require('assert');
-const config = process.binding('config');
+
+const { internalBinding } = require('internal/test/binding');
+
+const config = internalBinding('config');
 const fork = require('child_process').fork;
 
 function message(name) {
-  return `${name} did not set the process.binding('config').` +
+  return `${name} did not set the internalBinding('config').` +
          'pendingDeprecation flag.';
 }
 
